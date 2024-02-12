@@ -1,5 +1,5 @@
 # Download Homer
-FROM bash:5.2.26 as download-homer
+FROM bash:latest as download-homer
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN /usr/bin/env bash -O extglob -c 'rm -rf /app/assets/!(icons|manifest.json)'
 RUN /usr/bin/env bash -O globstar -c 'gzip -9 /app/**/*.{html,js,css,svg,ttf,json,ico}'
 
 # Build Busybox
-FROM alpine:3.19.1 AS build-busybox
+FROM alpine:latest AS build-busybox
 ARG BUSYBOX_VERSION=1.36.1
 
 RUN apk add gcc musl-dev make perl
@@ -27,7 +27,7 @@ RUN make && make install
 RUN adduser -D static
 
 # Download Tini
-FROM alpine:3.19.1 AS download-tini
+FROM alpine:latest AS download-tini
 ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini-static /tini-static
 RUN chmod +x /tini-static
 
