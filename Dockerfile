@@ -1,12 +1,15 @@
-# build stage
-FROM alpine:3.19.1 as download-homer
+# Download Homer
+FROM bash:5.2.26 as download-homer
 
 WORKDIR /app
 
-RUN apk add gzip unzip
+RUN apk add wget gzip unzip
+
 RUN wget https://github.com/bastienwirtz/homer/releases/latest/download/homer.zip -O /tmp/homer.zip
-RUN unzip /tmp/homer.zip -d /app
-RUN gzip -r /app
+RUN unzip /tmp/homer.zip -x "logo.png" -x "*.md" -d /app
+
+RUN /usr/bin/env bash -O extglob -c 'rm -rf /app/assets/!(icons|manifest.json)'  
+RUN /usr/bin/env bash -O globstar -c 'gzip -9 /app/**/*.{html,js,css,svg,ttf,json,ico}'
 
 # Build Busybox
 FROM alpine:3.19.1 AS build-busybox
@@ -28,7 +31,7 @@ FROM alpine:3.19.1 AS download-tini
 ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini-static /tini-static
 RUN chmod +x /tini-static
 
-# Switch to the scratch image
+# Compile scratch image
 FROM scratch as compile
 LABEL org.opencontainers.image.source https://github.com/trexx/docker-homer
 
@@ -40,7 +43,6 @@ USER static
 WORKDIR /www
 
 COPY --from=download-homer /app /www/
-COPY --from=download-homer /app/assets /www/default-assets
 
 ENTRYPOINT ["/tini-static", "--"]
 CMD ["/busybox", "httpd", "-f", "-p", "8080"]
