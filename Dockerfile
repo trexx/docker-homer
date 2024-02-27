@@ -15,7 +15,7 @@ RUN /usr/bin/env bash -O globstar -c 'gzip -9 /app/**/*.{html,js,css,svg,ttf,jso
 
 # Build Busybox
 FROM alpine:latest AS build-busybox
-ARG BUSYBOX_VERSION=1.36.1
+ENV BUSYBOX_VERSION 1.36.1
 
 RUN apk add gcc musl-dev make perl
 RUN wget https://busybox.net/downloads/busybox-${BUSYBOX_VERSION}.tar.bz2 \
@@ -29,7 +29,7 @@ RUN make && make install
 RUN adduser -D static
 
 # Download Tini
-# renovate: datasource=github-releases depName=krallin/tini versioning=loose
+# renovate: datasource=github-releases depName=krallin/tini
 ENV TINI_VERSION "v0.19.0"
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static /tini-static
 RUN chmod +x /tini-static
