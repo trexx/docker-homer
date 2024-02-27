@@ -7,7 +7,7 @@ RUN apk add wget gzip unzip
 
 # renovate: datasource=github-releases depName=bastienwirtz/homer
 ENV HOMER_VERSION "v24.02.1"
-RUN wget https://github.com/bastienwirtz/homer/releases/${HOMER_VERSION}/download/homer.zip -O /tmp/homer.zip
+RUN wget https://github.com/bastienwirtz/homer/releases/download/${HOMER_VERSION}/homer.zip -O /tmp/homer.zip
 RUN unzip /tmp/homer.zip -x "logo.png" -x "*.md" -d /app
 
 RUN /usr/bin/env bash -O extglob -c 'rm -rf /app/assets/!(icons|manifest.json)'  
