@@ -5,7 +5,9 @@ WORKDIR /app
 
 RUN apk add wget gzip unzip
 
-RUN wget https://github.com/bastienwirtz/homer/releases/latest/download/homer.zip -O /tmp/homer.zip
+# renovate: datasource=github-releases depName=bastienwirtz/homer versioning=loose
+ENV HOMER_VERSION "v24.02.1"
+RUN wget https://github.com/bastienwirtz/homer/releases/${HOMER_VERSION}/download/homer.zip -O /tmp/homer.zip
 RUN unzip /tmp/homer.zip -x "logo.png" -x "*.md" -d /app
 
 RUN /usr/bin/env bash -O extglob -c 'rm -rf /app/assets/!(icons|manifest.json)'  
@@ -27,8 +29,9 @@ RUN make && make install
 RUN adduser -D static
 
 # Download Tini
-FROM alpine:latest AS download-tini
-ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini-static /tini-static
+# renovate: datasource=github-releases depName=krallin/tini versioning=loose
+ENV TINI_VERSION "v0.19.0"
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static /tini-static
 RUN chmod +x /tini-static
 
 # Compile scratch image
@@ -37,7 +40,7 @@ LABEL org.opencontainers.image.source https://github.com/trexx/docker-homer
 
 COPY --from=build-busybox /etc/passwd /etc/passwd
 COPY --from=build-busybox /busybox/_install/bin/busybox /
-COPY --from=download-tini /tini-static /
+COPY --from=build-busybox /tini-static /
 
 USER static
 WORKDIR /www
