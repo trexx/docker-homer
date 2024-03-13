@@ -1,5 +1,5 @@
 # Download Homer
-FROM bash:latest@sha256:8e45c8ffe44db8784197f7c849a22292b446d76895f65646717b5a2152114d6e as download-homer
+FROM bash:latest as download-homer
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN /usr/bin/env bash -O extglob -c 'rm -rf /app/assets/!(icons|manifest.json)'
 RUN /usr/bin/env bash -O globstar -c 'gzip -9 /app/**/*.{html,js,css,svg,ttf,json,ico}'
 
 # Build Busybox
-FROM alpine:latest@sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b AS build-busybox
+FROM alpine:latest AS build-busybox
 ENV BUSYBOX_VERSION 1.36.1
 
 RUN apk add gcc musl-dev make perl
