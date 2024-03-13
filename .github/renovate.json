@@ -11,6 +11,14 @@
     "custom.regex",
     "github-actions"
   ],
+  "packageRules": [
+    {
+      "enabled": false,
+      "matchDepTypes":[
+        "stage"
+      ]
+    }
+  ],
   "customManagers": [
     {
       "customType": "regex",
