@@ -6,7 +6,6 @@
     "helpers:pinGitHubActionDigests"
   ],
   "enabledManagers": [
-    "dockerfile",
     "custom.regex",
     "github-actions"
   ],
