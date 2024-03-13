@@ -3,6 +3,7 @@
   "extends": [
     "docker:enableMajor",
     "docker:pinDigests",
+    "default:automergeDigest",
     "helpers:pinGitHubActionDigests"
   ],
   "enabledManagers": [
