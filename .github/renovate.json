@@ -7,17 +7,8 @@
     "helpers:pinGitHubActionDigests"
   ],
   "enabledManagers": [
-    "dockerfile",
     "custom.regex",
     "github-actions"
-  ],
-  "packageRules": [
-    {
-      "enabled": false,
-      "matchDepTypes":[
-        "stage"
-      ]
-    }
   ],
   "customManagers": [
     {
