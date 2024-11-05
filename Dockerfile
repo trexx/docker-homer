@@ -28,11 +28,11 @@ COPY .config ./
 RUN make && make install
 RUN adduser -D static
 
-# Download Tini
-# renovate: datasource=github-releases depName=krallin/tini
-ENV TINI_VERSION "v0.19.0"
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static /tini-static
-RUN chmod +x /tini-static
+# Download catatonit
+# renovate: datasource=github-releases depName=openSUSE/catatonit
+ENV CATATONIT_VERSION="v0.2.0"
+ADD https://github.com/openSUSE/catatonit/releases/download/${CATATONIT_VERSION}/catatonit.x86_64 /catatonit
+RUN chmod +x /catatonit
 
 # Compile scratch image
 FROM scratch AS compile
@@ -40,12 +40,12 @@ LABEL org.opencontainers.image.source="https://github.com/trexx/docker-homer"
 
 COPY --from=build-busybox /etc/passwd /etc/passwd
 COPY --from=build-busybox /busybox/_install/bin/busybox /
-COPY --from=build-busybox /tini-static /
+COPY --from=build-busybox /catatonit /
 
 USER static
 WORKDIR /www
 
 COPY --from=download-homer /app /www/
 
-ENTRYPOINT ["/tini-static", "--"]
+ENTRYPOINT ["/catatonit", "--"]
 CMD ["/busybox", "httpd", "-f", "-p", "8080"]
