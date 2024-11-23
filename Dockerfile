@@ -6,7 +6,7 @@ WORKDIR /app
 RUN apk add wget gzip unzip
 
 # renovate: datasource=github-releases depName=bastienwirtz/homer
-ENV HOMER_VERSION="v24.11.4"
+ENV HOMER_VERSION="v24.11.5"
 RUN wget https://github.com/bastienwirtz/homer/releases/download/${HOMER_VERSION}/homer.zip -O /tmp/homer.zip
 RUN unzip /tmp/homer.zip -x "logo.png" -x "*.md" -d /app
 
