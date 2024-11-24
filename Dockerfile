@@ -15,7 +15,7 @@ RUN /usr/bin/env bash -O globstar -c 'gzip -9 /app/**/*.{html,js,css,svg,ttf,jso
 
 # Build Busybox
 FROM alpine:latest AS build-busybox
-ENV BUSYBOX_VERSION="1.36.1"
+ENV BUSYBOX_VERSION="1.37.0"
 
 RUN apk add gcc musl-dev make perl
 RUN wget https://busybox.net/downloads/busybox-${BUSYBOX_VERSION}.tar.bz2 \
