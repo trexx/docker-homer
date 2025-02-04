@@ -5,7 +5,7 @@ WORKDIR /app
 
 RUN apk add wget gzip unzip
 
-# renovate: datasource=github-releases depName=bastienwirtz/homer
+# renovate: datasource=github-releases depName=bastienwirtz/homer versioning="regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
 ENV HOMER_VERSION="v24.12.1"
 RUN wget https://github.com/bastienwirtz/homer/releases/download/${HOMER_VERSION}/homer.zip -O /tmp/homer.zip
 RUN unzip /tmp/homer.zip -x "logo.png" -x "*.md" -d /app
@@ -29,7 +29,7 @@ RUN make && make install
 RUN adduser -D static
 
 # Download catatonit
-# renovate: datasource=github-releases depName=openSUSE/catatonit versioning="regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+# renovate: datasource=github-releases depName=openSUSE/catatonit
 ENV CATATONIT_VERSION="v0.2.1"
 ADD https://github.com/openSUSE/catatonit/releases/download/${CATATONIT_VERSION}/catatonit.x86_64 /catatonit
 RUN chmod +x /catatonit
