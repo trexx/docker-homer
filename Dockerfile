@@ -29,7 +29,7 @@ RUN make && make install
 RUN adduser -D static
 
 # Download catatonit
-# renovate: datasource=github-releases depName=openSUSE/catatonit
+# renovate: datasource=github-releases depName=openSUSE/catatonit versioning="regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
 ENV CATATONIT_VERSION="v0.2.1"
 ADD https://github.com/openSUSE/catatonit/releases/download/${CATATONIT_VERSION}/catatonit.x86_64 /catatonit
 RUN chmod +x /catatonit
