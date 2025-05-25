@@ -11,7 +11,7 @@ RUN wget https://github.com/bastienwirtz/homer/releases/download/${HOMER_VERSION
 RUN unzip /tmp/homer.zip -x "logo.png" -x "*.md" -d /app
 
 RUN /usr/bin/env bash -O extglob -c 'rm -rf /app/assets/!(icons|manifest.json)'  
-RUN /usr/bin/env bash -O globstar -c 'gzip -9 /app/**/*.{html,js,css,svg,ttf,json,ico}'
+RUN /usr/bin/env bash -O globstar -c 'gzip -9 /app/**/*.{html,js,css,svg,ttf,ico}'
 
 # Build Busybox
 FROM alpine:latest AS build-busybox
