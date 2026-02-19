@@ -9,7 +9,7 @@ jobs:
     uses: 'trexx/actions/.github/workflows/trivy.yml@main'
     secrets: 'inherit'
     with:
-      image-name: ${{ github.repository }}
+      image-name: '${{ github.repository }}'
     permissions:
       packages: 'read'
       contents: 'write'
