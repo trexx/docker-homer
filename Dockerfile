@@ -16,6 +16,3 @@ FROM ghcr.io/trexx/docker-busybox-httpd:latest AS compile
 LABEL org.opencontainers.image.source="https://github.com/trexx/docker-homer"
 
 COPY --from=download-homer /tmp/app /www/
-
-ENTRYPOINT ["/catatonit", "--"]
-CMD ["/busybox", "httpd", "-f", "-p", "8080"]
