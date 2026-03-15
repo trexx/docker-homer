@@ -10,6 +10,7 @@ RUN unzip /tmp/homer.zip -x "logo.png" -x "*.md" -d /tmp/app
 
 RUN /usr/bin/env bash -O extglob -c 'rm -rf /tmp/app/assets/!(icons|manifest.json)'  
 RUN /usr/bin/env bash -O globstar -c 'gzip -9 /tmp/app/**/*.{html,js,css,svg,ttf,ico}'
+RUN ln -s /etc/homer/config.yml /tmp/app/assets/config.yml
 
 # Compile image
 FROM scratch AS compile
