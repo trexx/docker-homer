@@ -12,7 +12,7 @@ RUN /usr/bin/env bash -O extglob -c 'rm -rf /tmp/app/assets/!(icons|manifest.jso
 RUN /usr/bin/env bash -O globstar -c 'gzip -9 /tmp/app/**/*.{html,js,css,svg,ttf,ico}'
 
 # Compile image
-FROM ghcr.io/trexx/docker-busybox-httpd:latest AS compile
+FROM scratch AS compile
 LABEL org.opencontainers.image.source="https://github.com/trexx/docker-homer"
 
-COPY --from=download-homer /tmp/app /www/
+COPY --from=download-homer /tmp/app /
