@@ -1,11 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "dependencyDashboard": true,
   "extends": [
-    "docker:enableMajor",
-    "docker:pinDigests",
-    "default:automergeDigest",
-    "default:automergeMinor"
+    "github>trexx/actions",
+    "github>trexx/actions:docker"
   ],
   "enabledManagers": [
     "custom.regex"
