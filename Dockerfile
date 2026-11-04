@@ -1,5 +1,5 @@
 # Download Homer
-FROM bash:latest AS download-homer
+FROM bash:5.3 AS download-homer
 
 RUN apk add --no-cache wget gzip unzip
 
@@ -14,6 +14,5 @@ RUN ln -s /etc/homer/config.yml /tmp/app/assets/config.yml
 
 # Compile image
 FROM scratch AS compile
-LABEL org.opencontainers.image.source="https://github.com/trexx/docker-homer"
 
 COPY --from=download-homer /tmp/app /

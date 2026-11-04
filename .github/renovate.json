@@ -5,6 +5,7 @@
     "github>trexx/actions:docker"
   ],
   "enabledManagers": [
+    "dockerfile",
     "custom.regex"
   ],
   "customManagers": [
