@@ -1,0 +1,29 @@
+name: 'Release'
+
+# Release button: Actions -> Release -> Run workflow. Tags homer's version, without the v and leading zeros: v26.08.3 is 26.8.3
+# (or <version>-N for a rebuild of a version released before), builds and pushes the
+# image, then creates the tag and GitHub release. Tick "dry run" to see the tag first.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to release (leave empty to work it out from the Dockerfile)'
+        required: false
+        default: ''
+      dry_run:
+        description: 'Dry run: only work out the tag and build the image'
+        type: boolean
+        default: false
+
+jobs:
+  release:
+    uses: 'trexx/actions/.github/workflows/release-image.yml@main'
+    permissions:
+      contents: 'write'
+      packages: 'write'
+    with:
+      version_command: >-
+        sed -n 's/^ENV HOMER_VERSION="v\([0-9.]*\)"/\1/p' Dockerfile | awk -F. '{printf "%d.%d.%d", $1, $2, $3}'
+      tag: '${{ inputs.tag }}'
+      dry_run: ${{ inputs.dry_run }}
